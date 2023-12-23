@@ -4,50 +4,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vídeo do YouTube</title>
-    <!-- Inclusão da API do YouTube para controle do player -->
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>Playlist Evangelística</title>
     <script type="text/javascript">
-        var player;
+        // Variáveis do GitHub
+        var githubUser = 'MISPerA';
+        var githubRepo = 'play';
+        var githubPath = 'Playlist Evangelística Projeto Habacuque 22.txt';
+        var csvUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
 
-        // Função chamada quando a API do YouTube estiver pronta
-        function onYouTubeIframeAPIReady() {
-            // Criação do objeto do player
-            player = new YT.Player('player', {
-                height: '360',
-                width: '640',
-                videoId: 'gglkHLTS9Ao', // ID do vídeo do YouTube
-                events: {
-                    'onReady': onPlayerReady, // Função chamada quando o player estiver pronto
-                    'onStateChange': onPlayerStateChange // Função chamada quando o estado do player muda
-                }
-            });
-        }
+        // Função para obter e processar os links
+        async function obterLinks() {
+            try {
+                // Obter o conteúdo do arquivo de texto no GitHub
+                var response = await fetch(csvUrl);
+                var data = await response.text();
 
-        // Função chamada quando o player estiver pronto para receber comandos
-        function onPlayerReady(event) {
-            // Inicia a reprodução automaticamente
-            event.target.playVideo();
-        }
+                // Separar o conteúdo por quebras de linha para obter os links
+                var links = data.split('\n').filter(link => link.trim() !== '');
 
-        // Função chamada quando o estado do player muda
-        function onPlayerStateChange(event) {
-            // Verifica se o player entrou no estado de reprodução
-            if (event.data === YT.PlayerState.PLAYING) {
-                // Inicia um temporizador de 1 minuto e 30 segundos (90 segundos)
+                // Chamar a função de redirecionamento após 1 minuto e 30 segundos
                 setTimeout(function() {
-                    // Redireciona para o link desejado após o tempo especificado
-                    window.location.href = 'https://seu-link-de-redirecionamento';
-                }, 90000); // 90 segundos em milissegundos
+                    redirecionarAleatoriamente(links);
+                }, 90000); // 90 segundos (1 minuto e 30 segundos)
+                
+            } catch (error) {
+                console.error('Erro ao obter os links:', error);
             }
         }
+
+        // Função para redirecionar aleatoriamente para um dos links
+        function redirecionarAleatoriamente(links) {
+            // Gere um número aleatório entre 0 e o número de links - 1
+            var indiceAleatorio = Math.floor(Math.random() * links.length);
+            
+            // Redirecione para o link selecionado aleatoriamente
+            window.location.href = links[indiceAleatorio];
+        }
+
+        // Chame a função de obterLinks assim que a página for carregada
+        window.onload = obterLinks;
     </script>
 </head>
 <body>
-    <!-- Elemento HTML onde o player do YouTube será inserido -->
-    <div id="player"></div>
-
-    <!-- Mensagem para o usuário informando sobre o redirecionamento -->
-    <p>Aguarde, você será redirecionado após 1 minuto e 30 segundos.</p>
+    <p>Aguarde, você está sendo redirecionado...</p>
 </body>
 </html>
