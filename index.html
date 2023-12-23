@@ -4,48 +4,82 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist Evangelística</title>
+    <title>Vídeo e Redirecionamento</title>
+    <!-- Inclui a API do YouTube -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script type="text/javascript">
-        // Variáveis do GitHub
-        var githubUser = 'MISPerA';
-        var githubRepo = 'play';
-        var githubPath = 'Playlist Evangelística Projeto Habacuque 22.txt';
-        var csvUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
+        var player;
 
-        // Função para obter e processar os links
-        async function obterLinks() {
-            try {
-                // Obter o conteúdo do arquivo de texto no GitHub
-                var response = await fetch(csvUrl);
-                var data = await response.text();
+        // Função chamada quando a API do YouTube estiver pronta
+        function onYouTubeIframeAPIReady() {
+            // Criação do objeto do player
+            player = new YT.Player('player', {
+                height: '360',
+                width: '640',
+                videoId: 'gglkHLTS9Ao', // ID do vídeo do YouTube
+                events: {
+                    'onReady': onPlayerReady, // Função chamada quando o player estiver pronto
+                    'onStateChange': onPlayerStateChange // Função chamada quando o estado do player muda
+                }
+            });
+        }
 
-                // Separar o conteúdo por quebras de linha para obter os links
-                var links = data.split('\n').filter(link => link.trim() !== '');
+        // Função chamada quando o player estiver pronto
+        function onPlayerReady(event) {
+            // Inicia a reprodução do vídeo
+            event.target.playVideo();
+        }
 
-                // Chamar a função de redirecionamento após 1 minuto e 30 segundos
-                setTimeout(function() {
-                    redirecionarAleatoriamente(links);
-                }, 90000); // 90 segundos (1 minuto e 30 segundos)
-                
-            } catch (error) {
-                console.error('Erro ao obter os links:', error);
+        // Função chamada quando o estado do player muda
+        function onPlayerStateChange(event) {
+            // Verifica se o estado do player é 1 (reproduzindo)
+            if (event.data == YT.PlayerState.PLAYING) {
+                // Aguarda 1 minuto e 30 segundos (90 segundos) antes de chamar a função de redirecionamento
+                setTimeout(redirecionarAleatoriamente, 90000);
             }
         }
 
-        // Função para redirecionar aleatoriamente para um dos links
-        function redirecionarAleatoriamente(links) {
-            // Gere um número aleatório entre 0 e o número de links - 1
-            var indiceAleatorio = Math.floor(Math.random() * links.length);
-            
-            // Redirecione para o link selecionado aleatoriamente
-            window.location.href = links[indiceAleatorio];
-        }
+        // Função para redirecionar aleatoriamente
+        function redirecionarAleatoriamente() {
+            // Variáveis do GitHub
+            var githubUser = 'MISPerA';
+            var githubRepo = 'play';
+            var githubPath = 'Playlist Evangelística Projeto Habacuque 22.txt';
+            var csvUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
 
-        // Chame a função de obterLinks assim que a página for carregada
-        window.onload = obterLinks;
+            // Função para obter e processar os links
+            async function obterLinks() {
+                try {
+                    // Obter o conteúdo do arquivo de texto no GitHub
+                    var response = await fetch(csvUrl);
+                    var data = await response.text();
+
+                    // Separar o conteúdo por quebras de linha para obter os links
+                    var links = data.split('\n').filter(link => link.trim() !== '');
+
+                    // Chamar a função de redirecionamento com os links obtidos
+                    redirecionarParaLinkAleatorio(links);
+                } catch (error) {
+                    console.error('Erro ao obter os links:', error);
+                }
+            }
+
+            // Função para redirecionar para um link aleatório
+            function redirecionarParaLinkAleatorio(links) {
+                // Gere um número aleatório entre 0 e o número de links - 1
+                var indiceAleatorio = Math.floor(Math.random() * links.length);
+
+                // Redirecione para o link selecionado aleatoriamente
+                window.location.href = links[indiceAleatorio];
+            }
+
+            // Chame a função de obterLinks para iniciar o processo
+            obterLinks();
+        }
     </script>
 </head>
 <body>
-    <p>Aguarde, você está sendo redirecionado...</p>
+    <!-- Div para conter o player do YouTube -->
+    <div id="player"></div>
 </body>
 </html>
