@@ -133,28 +133,3 @@ body {
     margin: 0 auto;
     max-width: 80%;
 }
-
-/* Adicione este estilo para a barra de progresso e contagem regressiva */
-#progress-bar-container {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-#progress-bar {
-    width: 0;
-    height: 20px;
-    background-color: #FFFFFF;
-    border-radius: 5px;
-}
-
-#countdown-text {
-    margin-top: 10px;
-    font-size: 18px;
-    text-align: center;
-}
-
-#countdown {
-    font-weight: bold;
-}

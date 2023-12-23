@@ -3,26 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist Evangelística</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Seu estilo CSS aqui */
-        /* ... */
-    </style>
+    <title>Cartas</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Adicionando o overlay com o texto -->
+    <!-- Sobreposição inicial -->
     <div id="overlay" class="overlay" onclick="startExperience()">
-        <h1>Clique para começar a ouvir!</h1>
+        <h1>Clique para ouvir!</h1>
     </div>
 
+    <!-- Contêiner principal -->
     <div class="container">
-        <!-- Elemento de carta com mensagem aleatória -->
+        <!-- Carta ou mensagem que será exibida -->
         <div class="card handwriting handwriting-animation" id="randomMessage">
             <!-- A mensagem será exibida aqui -->
         </div>
 
-        <!-- Seção do Instagram para compartilhamento -->
+        <!-- Seção de compartilhamento no Instagram -->
         <div class="instagram-section">
             <span class="instagram-text">Gostou? Compartilhe marcando o</span>
             <a class="instagram-link" href="https://www.instagram.com/mis.pera" target="_blank">
@@ -30,95 +27,20 @@
             </a>
         </div>
 
-        <!-- Container do logo -->
+        <!-- Logotipo -->
         <div class="logo-container">
-            <img src="logo.png" alt="Logo" class="logo" onclick="goToInstagram()">
+            <img src="logo.png" alt="Logo" class="logo">
         </div>
 
-        <!-- Barra de progresso e texto de contagem regressiva -->
-        <div id="progress-bar-container" style="display: none;">
-            <div id="progress-bar"></div>
-            <p id="countdown-text">Aguarde, você será redirecionado após esse vídeo acabar em <span id="countdown"></span> segundos</p>
+        <!-- Código de incorporação do YouTube -->
+        <div id="youtubePlayer">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/gglkHLTS9Ao" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
-        <!-- Elemento para incorporar o vídeo do YouTube -->
-        <div id="youtube-video" style="display: none;">
-            <!-- Embed do vídeo do YouTube com autoplay -->
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/gglkHLTS9Ao?autoplay=1&controls=0&showinfo=0&autohide=1&fs=0" frameborder="0" allowfullscreen></iframe>
-        </div>
+        <!-- Cronômetro -->
+        <div id="countdown" class="countdown"></div>
     </div>
 
-    <!-- Adicionando a biblioteca PapaParse para processamento de arquivos CSV/TSV -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <!-- Adicionando o script da API do YouTube para incorporação -->
-    <!-- script src="https://www.youtube.com/iframe_api"></script --> <!-- Não é mais necessário -->
-    <!-- Adicionando o seu script personalizado -->
     <script src="script.js"></script>
-
-    <script>
-        // URL do seu arquivo TXT no GitHub
-        var githubUser = 'MISPerA';
-        var githubRepo = 'play';
-        var githubPath = 'Playlist Evangelística  Projeto Habacuque 22.txt';
-        var txtUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var overlay = document.getElementById('overlay');
-            var progressBarContainer = document.getElementById('progress-bar-container');
-            var progressBar = document.getElementById('progress-bar');
-            var countdownText = document.getElementById('countdown-text');
-            var countdown = document.getElementById('countdown');
-            var youtubeVideoContainer = document.getElementById('youtube-video');
-
-            overlay.addEventListener('click', function () {
-                overlay.classList.add('fade-out');
-
-                // Exibe o contêiner do vídeo do YouTube
-                youtubeVideoContainer.style.display = 'block';
-
-                // Inicia a contagem regressiva e redirecionamento após o vídeo do YouTube
-                setTimeout(function () {
-                    progressBarContainer.style.display = 'flex';
-                    var duration = 90; // Duração do vídeo em segundos
-                    var interval = 1000; // Intervalo de atualização em milissegundos
-                    var remainingTime = duration;
-
-                    var updateProgressBar = function () {
-                        var progress = (duration - remainingTime) / duration * 100;
-                        progressBar.style.width = progress + '%';
-                        countdown.innerText = remainingTime;
-                        remainingTime--;
-
-                        if (remainingTime < 0) {
-                            // Redireciona para um link aleatório no arquivo TXT
-                            window.location.href = getRandomLinkFromTxt();
-                        }
-                    };
-
-                    // Inicia o intervalo
-                    var countdownInterval = setInterval(updateProgressBar, interval);
-                }, 1000);
-            });
-
-            function getRandomLinkFromTxt() {
-                // Obtém os links do arquivo TXT e retorna um link aleatório
-                return fetch(txtUrl)
-                    .then(response => response.text())
-                    .then(data => {
-                        var links = data.split('\n').filter(link => link.trim() !== '');
-                        var randomIndex = Math.floor(Math.random() * links.length);
-                        return links[randomIndex];
-                    });
-            }
-
-            // Função para ir para o Instagram
-            window.goToInstagram = function () {
-                window.location.href = 'https://www.instagram.com/mis.pera';
-            };
-        });
-
-        // A função onYouTubeIframeAPIReady() não é mais necessária
-        // A incorporação do vídeo do YouTube é feita diretamente no HTML
-    </script>
 </body>
 </html>
