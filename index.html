@@ -2,89 +2,164 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Overlay inicial para iniciar a experiência -->
-    <div id="overlay" class="overlay" onclick="startExperience()">
-        <h1>Clique para começar a Ouvir!</h1>
-    </div>
+    <title>Vídeo e Redirecionamento</title>
+    <!-- Inclui a API do YouTube -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        /* Estilos para a página */
+        #player-container {
+            position: relative;
+            max-width: 640px;
+            margin: auto;
+        }
 
-    <!-- Reprodutor de vídeo -->
-    <video id="backgroundVideo" loop style="display: none;">
-        <source src="https://www.youtube.com/embed/gglkHLTS9Ao" type="video/mp4">
-        Seu navegador não suporta a tag de vídeo.
-    </video>
+        #start-message {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
 
-    <!-- Container principal -->
-    <div class="container">
-        <!-- Carta com animação de escrita à mão -->
-        <div class="card handwriting handwriting-animation" id="randomMessage">
-            <!-- A mensagem será exibida aqui -->
-        </div>
+        #countdown {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+        }
 
-        <!-- Seção do Instagram para compartilhamento -->
-        <div class="instagram-section">
-            <span class="instagram-text">Gostou? Compartilhe marcando o</span>
-            <a class="instagram-link" href="https://www.instagram.com/mis.pera" target="_blank">
-                <i class="fab fa-instagram instagram-logo"></i>@mis.pera
-            </a>
-        </div>
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            margin-top: 10px;
+            position: relative;
+        }
 
-        <!-- Container do logotipo -->
-        <div class="logo-container">
-            <img src="logo.png" alt="Logo" class="logo">
-        </div>
-    </div>
+        #progress-indicator {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0;
+        }
+    </style>
+    <script type="text/javascript">
+        var player;
+        var countdownInterval;
 
-    <!-- Importação de bibliotecas externas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="script.js"></script>
-
-    <!-- Script para lidar com interações do usuário -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var video = document.getElementById('backgroundVideo');
-            var hasUserInteracted = false;
-
-            document.addEventListener('click', function () {
-                if (!hasUserInteracted) {
-                    // Inicia o vídeo ao clicar
-                    video.play();
-                    // Inicia a contagem regressiva de 1 minuto e 30 segundos antes do redirecionamento
-                    setTimeout(redirectAfterVideo, 90000);
-                    hasUserInteracted = true;
+        // Função chamada quando a API do YouTube estiver pronta
+        function onYouTubeIframeAPIReady() {
+            // Criação do objeto do player
+            player = new YT.Player('player', {
+                height: '360',
+                width: '640',
+                videoId: 'gglkHLTS9Ao', // ID do vídeo do YouTube
+                events: {
+                    'onReady': onPlayerReady, // Função chamada quando o player estiver pronto
+                    'onStateChange': onPlayerStateChange // Função chamada quando o estado do player muda
                 }
             });
-
-            setTimeout(function () {
-                if (!hasUserInteracted) {
-                    // Inicia o vídeo automaticamente após 5 segundos, se o usuário ainda não interagiu
-                    video.play();
-                    // Inicia a contagem regressiva de 1 minuto e 30 segundos antes do redirecionamento
-                    setTimeout(redirectAfterVideo, 90000);
-                    hasUserInteracted = true;
-                }
-            }, 5000);
-        });
-
-        function startExperience() {
-            var overlay = document.getElementById('overlay');
-            var video = document.getElementById('backgroundVideo');
-            
-            overlay.classList.add('fade-out');
-            video.play();
-            document.querySelector('.card').classList.add('open-animation');
         }
 
-        function redirectAfterVideo() {
-            // Adicione aqui a lógica para redirecionar para um link aleatório no bloco de notas
-            // Utilize o mesmo método que você implementou anteriormente para obter links do bloco de notas
-            // e redirecione para um link aleatório
+        // Função chamada quando o player estiver pronto
+        function onPlayerReady(event) {
+            // Mostra a mensagem inicial
+            document.getElementById('start-message').style.display = 'block';
+
+            // Inicia a reprodução do vídeo
+            event.target.playVideo();
+        }
+
+        // Função chamada quando o estado do player muda
+        function onPlayerStateChange(event) {
+            // Verifica se o estado do player é 1 (reproduzindo)
+            if (event.data == YT.PlayerState.PLAYING) {
+                // Inicia o contador regressivo
+                iniciarContadorRegressivo();
+            }
+        }
+
+        // Função para iniciar o contador regressivo
+        function iniciarContadorRegressivo() {
+            var tempoRestante = 90; // 90 segundos
+
+            // Exibe a barra de progresso
+            document.getElementById('progress-bar').style.display = 'block';
+
+            // Atualiza o texto do contador
+            atualizarContador(tempoRestante);
+
+            // Atualiza o progresso da barra a cada segundo
+            countdownInterval = setInterval(function () {
+                tempoRestante--;
+
+                if (tempoRestante >= 0) {
+                    atualizarContador(tempoRestante);
+                } else {
+                    // Para o intervalo quando o tempo acabar
+                    clearInterval(countdownInterval);
+                    
+                    // Chama a função de redirecionamento
+                    redirecionarAleatoriamente();
+                }
+            }, 1000);
+        }
+
+        // Função para atualizar o contador na tela
+        function atualizarContador(tempoRestante) {
+            document.getElementById('countdown').innerHTML = `Tempo restante: ${tempoRestante} segundos`;
+            
+            // Atualiza o progresso da barra
+            var progresso = (90 - tempoRestante) / 90 * 100;
+            document.getElementById('progress-indicator').style.width = progresso + '%';
+        }
+
+        // Função para redirecionar aleatoriamente
+        function redirecionarAleatoriamente() {
+            // Variáveis do GitHub
+            var githubUser = 'MISPerA';
+            var githubRepo = 'play';
+            var githubPath = 'Playlist Evangelística Projeto Habacuque 22.txt';
+            var csvUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
+
+            // Função para obter e processar os links
+            async function obterLinks() {
+                try {
+                    // Obter o conteúdo do arquivo de texto no GitHub
+                    var response = await fetch(csvUrl);
+                    var data = await response.text();
+
+                    // Separar o conteúdo por quebras de linha para obter os links
+                    var links = data.split('\n').filter(link => link.trim() !== '');
+
+                    // Chamar a função de redirecionamento com os links obtidos
+                    redirecionarParaLinkAleatorio(links);
+                } catch (error) {
+                    console.error('Erro ao obter os links:', error);
+                }
+            }
+
+            // Função para redirecionar para um link aleatório
+            function redirecionarParaLinkAleatorio(links) {
+                // Gere um número aleatório entre 0 e o número de links - 1
+                var indiceAleatorio = Math.floor(Math.random() * links.length);
+
+                // Redirecione para o link selecionado aleatoriamente
+                window.location.href = links[indiceAleatorio];
+            }
+
+            // Chame a função de obterLinks para iniciar o processo
+            obterLinks();
         }
     </script>
+</head>
+<body>
+    <!-- Div para conter o player do YouTube -->
+    <div id="player-container">
+        <div id="start-message" style="display: none;">Clique para começar a Ouvir!</div>
+        <div id="player"></div>
+        <div id="countdown"></div>
+        <div id="progress-bar" style="display: none;">
+            <div id="progress-indicator"></div>
+        </div>
+    </div>
 </body>
 </html>
