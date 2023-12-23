@@ -9,21 +9,6 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         /* Estilos para a página */
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
         #player-container {
             position: relative;
             max-width: 640px;
@@ -78,9 +63,6 @@
         function onPlayerReady(event) {
             // Mostra a mensagem inicial
             document.getElementById('start-message').style.display = 'block';
-
-            // Inicia a reprodução do vídeo
-            event.target.playVideo();
         }
 
         // Função chamada quando o estado do player muda
@@ -132,7 +114,7 @@
             // Variáveis do GitHub
             var githubUser = 'MISPerA';
             var githubRepo = 'play';
-            var githubPath = 'Playlist Evangelística  Projeto Habacuque 22.txt';
+            var githubPath = 'Playlist Evangelística Projeto Habacuque 22.txt';
             var csvUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
 
             // Função para obter e processar os links
@@ -164,17 +146,21 @@
             // Chame a função de obterLinks para iniciar o processo
             obterLinks();
         }
+
+        // Função chamada quando a pessoa clica para começar a ouvir
+        function startExperience() {
+            // Esconde a mensagem inicial
+            document.getElementById('start-message').style.display = 'none';
+
+            // Inicia a reprodução do vídeo
+            player.playVideo();
+        }
     </script>
 </head>
 <body>
-    <!-- Overlay inicial -->
-    <div id="overlay" onclick="startExperience()">
-        <h1>Clique para começar a Ouvir!</h1>
-    </div>
-    
     <!-- Div para conter o player do YouTube -->
     <div id="player-container">
-        <div id="start-message" style="display: none;">Clique para começar a Ouvir!</div>
+        <div id="start-message" onclick="startExperience()">Clique para começar a Ouvir!</div>
         <div id="player"></div>
         <div id="countdown"></div>
         <div id="progress-bar" style="display: none;">
