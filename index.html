@@ -1,34 +1,51 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vídeo e Redirecionamento</title>
-    <!-- Inclui a API do YouTube -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <link rel="stylesheet" href="styles.css">
+    <title>Playlist Evangelistica</title>
+    <script type="text/javascript">
+        // URL do seu arquivo TXT no GitHub
+        var githubUser = 'MISPerA';
+        var githubRepo = 'play';
+        var githubPath = 'Playlist%20Evangel%C3%ADstica%20Projeto%20Habacuque%2022.txt';
+        var txtUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
+
+        // Função para carregar os links do arquivo TXT e redirecionar aleatoriamente
+        function carregarLinksEredirecionar() {
+            // Requisição para obter o conteúdo do arquivo TXT
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Separar as linhas do arquivo e remover espaços em branco
+                    var links = xhr.responseText.split('\n').map(function (link) {
+                        return link.trim();
+                    });
+
+                    // Remover links em branco (se houver)
+                    links = links.filter(function (link) {
+                        return link !== '';
+                    });
+
+                    // Verificar se há links disponíveis
+                    if (links.length > 0) {
+                        // Gerar um número aleatório entre 0 e o número de links - 1
+                        var indiceAleatorio = Math.floor(Math.random() * links.length);
+
+                        // Redirecionar para o link selecionado aleatoriamente
+                        window.location.href = links[indiceAleatorio];
+                    } else {
+                        console.error('Nenhum link encontrado no arquivo TXT.');
+                    }
+                }
+            };
+            xhr.open('GET', txtUrl, true);
+            xhr.send();
+        }
+
+        // Chame a função de carregamento e redirecionamento assim que a página for carregada
+        window.onload = carregarLinksEredirecionar;
+    </script>
 </head>
 <body>
-    <div id="overlay" class="overlay" onclick="startExperience()">
-        <h1>Clique para começar a Ouvir!</h1>
-    </div>
-
-    <audio id="backgroundAudio" loop style="display: none;">
-        <source src="Musica.mp3" type="audio/mp3">
-        Seu navegador não suporta a tag de áudio.
-    </audio>
-
-    <div class="container">
-        <div id="player-container">
-            <div id="player"></div>
-            <div id="countdown"></div>
-            <div id="progress-bar" style="display: none;">
-                <div id="progress-indicator"></div>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript" src="script.js"></script>
+    <p>Aguarde, você está sendo redirecionado...</p>
 </body>
 </html>
