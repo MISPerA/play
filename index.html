@@ -6,7 +6,7 @@
     <title>Playlist Evangelística</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Coloque aqui o seu estilo CSS conforme fornecido anteriormente */
+        /* Seu estilo CSS aqui */
         /* ... */
     </style>
 </head>
@@ -43,14 +43,15 @@
 
         <!-- Elemento para incorporar o vídeo do YouTube -->
         <div id="youtube-video" style="display: none;">
-            <!-- A API de incorporação do YouTube injetará o player aqui -->
+            <!-- Embed do vídeo do YouTube com autoplay -->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/gglkHLTS9Ao?autoplay=1&controls=0&showinfo=0&autohide=1&fs=0" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 
     <!-- Adicionando a biblioteca PapaParse para processamento de arquivos CSV/TSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <!-- Adicionando o script da API do YouTube para incorporação -->
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- script src="https://www.youtube.com/iframe_api"></script --> <!-- Não é mais necessário -->
     <!-- Adicionando o seu script personalizado -->
     <script src="script.js"></script>
 
@@ -116,24 +117,8 @@
             };
         });
 
-        // Função chamada pela API de incorporação do YouTube
-        function onYouTubeIframeAPIReady() {
-            var player = new YT.Player('youtube-video', {
-                height: '390',
-                width: '640',
-                videoId: 'gglkHLTS9Ao', // ID do vídeo do YouTube
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Inicia o vídeo quando o overlay for clicado
-            document.getElementById('overlay').addEventListener('click', function () {
-                event.target.playVideo();
-            });
-        }
+        // A função onYouTubeIframeAPIReady() não é mais necessária
+        // A incorporação do vídeo do YouTube é feita diretamente no HTML
     </script>
 </body>
 </html>
