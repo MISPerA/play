@@ -19,6 +19,15 @@
             text-align: center;
             font-size: 18px;
             margin-bottom: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         #countdown {
@@ -122,50 +131,4 @@
                 try {
                     // Obter o conteúdo do arquivo de texto no GitHub
                     var response = await fetch(csvUrl);
-                    var data = await response.text();
-
-                    // Separar o conteúdo por quebras de linha para obter os links
-                    var links = data.split('\n').filter(link => link.trim() !== '');
-
-                    // Chamar a função de redirecionamento com os links obtidos
-                    redirecionarParaLinkAleatorio(links);
-                } catch (error) {
-                    console.error('Erro ao obter os links:', error);
-                }
-            }
-
-            // Função para redirecionar para um link aleatório
-            function redirecionarParaLinkAleatorio(links) {
-                // Gere um número aleatório entre 0 e o número de links - 1
-                var indiceAleatorio = Math.floor(Math.random() * links.length);
-
-                // Redirecione para o link selecionado aleatoriamente
-                window.location.href = links[indiceAleatorio];
-            }
-
-            // Chame a função de obterLinks para iniciar o processo
-            obterLinks();
-        }
-
-        // Função chamada quando a pessoa clica para começar a ouvir
-        function startExperience() {
-            // Esconde a mensagem inicial
-            document.getElementById('start-message').style.display = 'none';
-
-            // Inicia a reprodução do vídeo
-            player.playVideo();
-        }
-    </script>
-</head>
-<body>
-    <!-- Div para conter o player do YouTube -->
-    <div id="player-container">
-        <div id="start-message" onclick="startExperience()">Clique para começar a Ouvir!</div>
-        <div id="player"></div>
-        <div id="countdown"></div>
-        <div id="progress-bar" style="display: none;">
-            <div id="progress-indicator"></div>
-        </div>
-    </div>
-</body>
-</html>
+                    var data = await
