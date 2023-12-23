@@ -1,115 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Playlist Evangelistica</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Evangelística</title>
     <script type="text/javascript">
-        // Array com os links que você forneceu
-        var links = [
-            "https://www.youtube.com/watch?v=3SEz_SemHtk",
-            "https://www.youtube.com/watch?v=UgW6riuTSfU",
-            "https://www.youtube.com/watch?v=EN5aSA6riaM",
-            "https://www.youtube.com/watch?v=8Zb46YXB6fA",
-            "https://www.youtube.com/watch?v=0H6WYzM0TMg",
-            "https://www.youtube.com/watch?v=ExQWoCGkuOM",
-            "https://www.youtube.com/watch?v=1hyebrOBa1M",
-            "https://www.youtube.com/watch?v=zGBjNHw9cCw",
-            "https://www.youtube.com/watch?v=hE8n8Eh-w3Y",
-            "https://www.youtube.com/watch?v=COn5hcR6NBI",
-            "https://www.youtube.com/watch?v=Wmyezll4vpw",
-            "https://www.youtube.com/watch?v=L-7UCsQteSc",
-            "https://www.youtube.com/watch?v=uqWlAa2MCyc",
-            "https://www.youtube.com/watch?v=U-kO_3OQ1cA",
-            "https://www.youtube.com/watch?v=lMpRU86GQZY",
-            "https://www.youtube.com/watch?v=iWtfmar24Ck",
-            "https://www.youtube.com/watch?v=Z3f5bHaKzwc",
-            "https://www.youtube.com/watch?v=_P59je5vtWY",
-            "https://www.youtube.com/watch?v=a-SbJlag1M4",
-            "https://www.youtube.com/watch?v=xfVgCL9ZWhA",
-            "https://www.youtube.com/watch?v=4b38f230wnQ",
-            "https://www.youtube.com/watch?v=IozqQk0ScKk",
-            "https://www.youtube.com/watch?v=NSAEphKyS-g",
-            "https://www.youtube.com/watch?v=zgaEKyY_rn4",
-            "https://www.youtube.com/watch?v=Kblus0nohZI",
-            "https://www.youtube.com/watch?v=JZRnqyaSsDQ",
-            "https://www.youtube.com/watch?v=bvGvM1prcEw",
-            "https://www.youtube.com/watch?v=3YlXIAqI-kY",
-            "https://www.youtube.com/watch?v=J1bF1eXhvUE",
-            "https://www.youtube.com/watch?v=weK2VUnV3gQ",
-            "https://www.youtube.com/watch?v=Lwokr2izljc",
-            "https://www.youtube.com/watch?v=g5ru_zAztq0",
-            "https://www.youtube.com/watch?v=qVriK-z7JBA",
-            "https://www.youtube.com/watch?v=T3gXy5j2Oe8",
-            "https://www.youtube.com/watch?v=xaWbSiDhiUc",
-            "https://www.youtube.com/watch?v=AAvjEp7u9tA",
-            "https://www.youtube.com/watch?v=81GaF34veWA",
-            "https://www.youtube.com/watch?v=KfZrHIuCoPo",
-            "https://www.youtube.com/watch?v=1i1673ILdVI",
-            "https://www.youtube.com/watch?v=73hMcaT4G4s",
-            "https://www.youtube.com/watch?v=UOVVUfXmA_E",
-            "https://www.youtube.com/watch?v=xu8Zel1u-6k",
-            "https://www.youtube.com/watch?v=XEa2jjT9SyQ",
-            "https://www.youtube.com/watch?v=Df8Wxxjv5Xc",
-            "https://www.youtube.com/watch?v=meiqsELWxNs",
-            "https://www.youtube.com/watch?v=KzvR1sG1YmY",
-            "https://www.youtube.com/watch?v=jOstWAne8q4",
-            "https://www.youtube.com/watch?v=anKUf3d64Bc",
-            "https://www.youtube.com/watch?v=tgs3ux9GPxY",
-            "https://www.youtube.com/watch?v=GbMJaz3nRoE",
-            "https://www.youtube.com/watch?v=DYF1KjjjgGY",
-            "https://www.youtube.com/watch?v=hCVRYamLhHk",
-            "https://www.youtube.com/watch?v=ndiq4VXO6LE",
-            "https://www.youtube.com/watch?v=DRmzDXXPLhA",
-            "https://www.youtube.com/watch?v=-9OS0Y2pmiM",
-            "https://www.youtube.com/watch?v=On3b_3v26YU",
-            "https://www.youtube.com/watch?v=8-NENGO7R1c",
-            "https://www.youtube.com/watch?v=LFASRxvhg1k",
-            "https://www.youtube.com/watch?v=JPqitveFAGo",
-            "https://www.youtube.com/watch?v=yovzEEYOl-E",
-            "https://www.youtube.com/watch?v=SrvFZDSkieU",
-            "https://www.youtube.com/watch?v=B9W1zz6pDyU",
-            "https://www.youtube.com/watch?v=wSKKEAnLTDw",
-            "https://www.youtube.com/watch?v=BCu_4i7g3-A",
-            "https://www.youtube.com/watch?v=4vkhEgq3WvQ",
-            "https://www.youtube.com/watch?v=YnrN0o0lubM",
-            "https://www.youtube.com/watch?v=Veh-M8GKeJA",
-            "https://www.youtube.com/watch?v=founBXufLYg",
-            "https://www.youtube.com/watch?v=BF0q-LAn8fw",
-            "https://www.youtube.com/watch?v=7TrlHs5x-Do",
-            "https://www.youtube.com/watch?v=9fZph9kZkgM",
-            "https://www.youtube.com/watch?v=F3YJvbEIQ48",
-            "https://www.youtube.com/watch?v=KEDvwgqDPVY",
-            "https://www.youtube.com/watch?v=1yabCCwEQx8",
-            "https://www.youtube.com/watch?v=DI9DWJuYiuU",
-            "https://www.youtube.com/watch?v=xdr1Wg_cgSo",
-            "https://www.youtube.com/watch?v=QbnmpJo3DiI",
-            "https://www.youtube.com/watch?v=cfV1IITfFf8",
-            "https://www.youtube.com/watch?v=t__sN12x89A",
-            "https://www.youtube.com/watch?v=2HjsZfQ18r0",
-            "https://www.youtube.com/watch?v=v8gaG2ed01I",
-            "https://www.youtube.com/watch?v=fVXotQlSFvU",
-            "https://www.youtube.com/watch?v=xuYf1GFBTV0",
-            "https://www.youtube.com/watch?v=q4ODVRA0mcQ",
-            "https://www.youtube.com/watch?v=scnBd3lAO0I",
-            "https://www.youtube.com/watch?v=Eb0-Az8hWmA",
-            "https://www.youtube.com/watch?v=J0wU3wVxaGo",
-            "https://www.youtube.com/watch?v=n2tjJ8iqWOk",
-            "https://www.youtube.com/watch?v=incBpxO37cY",
-            "https://www.youtube.com/watch?v=g4Y_5HjYOro",
-            "https://www.youtube.com/watch?v=YALR6nUqS7I",
-            "https://www.youtube.com/watch?v=zV95sQxHd9c"
-        ];
+        // Variáveis do GitHub
+        var githubUser = 'MISPerA';
+        var githubRepo = 'play';
+        var githubPath = 'Playlist Evangelística Projeto Habacuque 22.txt';
+        var csvUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
+
+        // Função para obter e processar os links
+        async function obterLinks() {
+            try {
+                // Obter o conteúdo do arquivo de texto no GitHub
+                var response = await fetch(csvUrl);
+                var data = await response.text();
+
+                // Separar o conteúdo por quebras de linha para obter os links
+                var links = data.split('\n').filter(link => link.trim() !== '');
+
+                // Chamar a função de redirecionamento com os links obtidos
+                redirecionarAleatoriamente(links);
+            } catch (error) {
+                console.error('Erro ao obter os links:', error);
+            }
+        }
 
         // Função para redirecionar aleatoriamente para um dos links
-        function redirecionarAleatoriamente() {
+        function redirecionarAleatoriamente(links) {
             // Gere um número aleatório entre 0 e o número de links - 1
             var indiceAleatorio = Math.floor(Math.random() * links.length);
             
             // Redirecione para o link selecionado aleatoriamente
             window.location.href = links[indiceAleatorio];
         }
-        
-        // Chame a função de redirecionamento assim que a página for carregada
-        window.onload = redirecionarAleatoriamente;
+
+        // Chame a função de obterLinks assim que a página for carregada
+        window.onload = obterLinks;
     </script>
 </head>
 <body>
