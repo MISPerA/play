@@ -7,8 +7,43 @@
     <title>Vídeo e Redirecionamento</title>
     <!-- Inclui a API do YouTube -->
     <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        /* Estilos para a página */
+        #player-container {
+            position: relative;
+            max-width: 640px;
+            margin: auto;
+        }
+
+        #start-message {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        #countdown {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        #progress-indicator {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0;
+        }
+    </style>
     <script type="text/javascript">
         var player;
+        var countdownInterval;
 
         // Função chamada quando a API do YouTube estiver pronta
         function onYouTubeIframeAPIReady() {
@@ -26,6 +61,9 @@
 
         // Função chamada quando o player estiver pronto
         function onPlayerReady(event) {
+            // Mostra a mensagem inicial
+            document.getElementById('start-message').style.display = 'block';
+
             // Inicia a reprodução do vídeo
             event.target.playVideo();
         }
@@ -34,9 +72,44 @@
         function onPlayerStateChange(event) {
             // Verifica se o estado do player é 1 (reproduzindo)
             if (event.data == YT.PlayerState.PLAYING) {
-                // Aguarda 1 minuto e 30 segundos (90 segundos) antes de chamar a função de redirecionamento
-                setTimeout(redirecionarAleatoriamente, 90000);
+                // Inicia o contador regressivo
+                iniciarContadorRegressivo();
             }
+        }
+
+        // Função para iniciar o contador regressivo
+        function iniciarContadorRegressivo() {
+            var tempoRestante = 90; // 90 segundos
+
+            // Exibe a barra de progresso
+            document.getElementById('progress-bar').style.display = 'block';
+
+            // Atualiza o texto do contador
+            atualizarContador(tempoRestante);
+
+            // Atualiza o progresso da barra a cada segundo
+            countdownInterval = setInterval(function () {
+                tempoRestante--;
+
+                if (tempoRestante >= 0) {
+                    atualizarContador(tempoRestante);
+                } else {
+                    // Para o intervalo quando o tempo acabar
+                    clearInterval(countdownInterval);
+                    
+                    // Chama a função de redirecionamento
+                    redirecionarAleatoriamente();
+                }
+            }, 1000);
+        }
+
+        // Função para atualizar o contador na tela
+        function atualizarContador(tempoRestante) {
+            document.getElementById('countdown').innerHTML = `Tempo restante: ${tempoRestante} segundos`;
+            
+            // Atualiza o progresso da barra
+            var progresso = (90 - tempoRestante) / 90 * 100;
+            document.getElementById('progress-indicator').style.width = progresso + '%';
         }
 
         // Função para redirecionar aleatoriamente
@@ -80,6 +153,13 @@
 </head>
 <body>
     <!-- Div para conter o player do YouTube -->
-    <div id="player"></div>
+    <div id="player-container">
+        <div id="start-message" style="display: none;">Clique para começar a Ouvir!</div>
+        <div id="player"></div>
+        <div id="countdown"></div>
+        <div id="progress-bar" style="display: none;">
+            <div id="progress-indicator"></div>
+        </div>
+    </div>
 </body>
 </html>
