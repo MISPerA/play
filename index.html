@@ -9,6 +9,21 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         /* Estilos para a página */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
         #player-container {
             position: relative;
             max-width: 640px;
@@ -117,7 +132,7 @@
             // Variáveis do GitHub
             var githubUser = 'MISPerA';
             var githubRepo = 'play';
-            var githubPath = 'Playlist Evangelística Projeto Habacuque 22.txt';
+            var githubPath = 'Playlist Evangelística  Projeto Habacuque 22.txt';
             var csvUrl = `https://raw.githubusercontent.com/${githubUser}/${githubRepo}/main/${githubPath}`;
 
             // Função para obter e processar os links
@@ -152,6 +167,11 @@
     </script>
 </head>
 <body>
+    <!-- Overlay inicial -->
+    <div id="overlay" onclick="startExperience()">
+        <h1>Clique para começar a Ouvir!</h1>
+    </div>
+    
     <!-- Div para conter o player do YouTube -->
     <div id="player-container">
         <div id="start-message" style="display: none;">Clique para começar a Ouvir!</div>
