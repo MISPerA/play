@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,65 +8,32 @@
     <title>Vídeo e Redirecionamento</title>
     <!-- Inclui a API do YouTube -->
     <script src="https://www.youtube.com/iframe_api"></script>
-    <!-- Importa o arquivo CSS externo -->
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Estilos para a página (se houver algum específico que não foi movido para o arquivo CSS) */
-        #player-container {
-            position: relative;
-            max-width: 640px;
-            margin: auto;
-        }
-
-        #start-message {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        #countdown {
-            text-align: center;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        #progress-bar {
-            width: 100%;
-            height: 20px;
-            background-color: #ddd;
-            margin-top: 10px;
-            position: relative;
-        }
-
-        #progress-indicator {
-            height: 100%;
-            background-color: #4caf50;
-            width: 0;
-        }
-    </style>
-    <script type="text/javascript">
-        // ... (o restante do seu script JavaScript)
-    </script>
 </head>
+
 <body>
     <!-- Div para conter o player do YouTube -->
     <div id="player-container">
-        <!-- Sobreposição inicial com o botão -->
         <div id="overlay" class="overlay" onclick="startExperience()">
-            <h1 id="start-message">Clique para começar a Ouvir!</h1>
-            <button id="start-button">Clique para começar a Ouvir!</button>
+            <h1>Clique para começar a Ouvir!</h1>
         </div>
 
-        <!-- Player do YouTube e outros elementos -->
-        <div id="player"></div>
-        <div id="countdown"></div>
-        <div id="progress-bar" style="display: none;">
-            <div id="progress-indicator"></div>
+        <audio id="backgroundAudio" loop style="display: none;">
+            <source src="Musica.mp3" type="audio/mp3">
+            Seu navegador não suporta a tag de áudio.
+        </audio>
+
+        <div class="container">
+            <div id="player"></div>
+            <div id="countdown"></div>
+            <div id="progress-bar" style="display: none;">
+                <div id="progress-indicator"></div>
+            </div>
         </div>
     </div>
-    <!-- Adicione o script após os elementos para garantir que o DOM esteja carregado -->
-    <script type="text/javascript">
-        // ... (o restante do seu script JavaScript)
-    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
