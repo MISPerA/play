@@ -11,6 +11,7 @@
     </style>
 </head>
 <body>
+    <!-- Adicionando o overlay com o texto -->
     <div id="overlay" class="overlay" onclick="startExperience()">
         <h1>Clique para começar a ouvir!</h1>
     </div>
@@ -39,10 +40,17 @@
             <div id="progress-bar"></div>
             <p id="countdown-text">Aguarde, você será redirecionado após esse vídeo acabar em <span id="countdown"></span> segundos</p>
         </div>
+
+        <!-- Elemento para incorporar o vídeo do YouTube -->
+        <div id="youtube-video" style="display: none;">
+            <!-- A API de incorporação do YouTube injetará o player aqui -->
+        </div>
     </div>
 
     <!-- Adicionando a biblioteca PapaParse para processamento de arquivos CSV/TSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- Adicionando o script da API do YouTube para incorporação -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <!-- Adicionando o seu script personalizado -->
     <script src="script.js"></script>
 
@@ -59,11 +67,15 @@
             var progressBar = document.getElementById('progress-bar');
             var countdownText = document.getElementById('countdown-text');
             var countdown = document.getElementById('countdown');
+            var youtubeVideoContainer = document.getElementById('youtube-video');
 
             overlay.addEventListener('click', function () {
                 overlay.classList.add('fade-out');
 
-                // Configura a contagem regressiva e redirecionamento
+                // Exibe o contêiner do vídeo do YouTube
+                youtubeVideoContainer.style.display = 'block';
+
+                // Inicia a contagem regressiva e redirecionamento após o vídeo do YouTube
                 setTimeout(function () {
                     progressBarContainer.style.display = 'flex';
                     var duration = 90; // Duração do vídeo em segundos
@@ -103,6 +115,25 @@
                 window.location.href = 'https://www.instagram.com/mis.pera';
             };
         });
+
+        // Função chamada pela API de incorporação do YouTube
+        function onYouTubeIframeAPIReady() {
+            var player = new YT.Player('youtube-video', {
+                height: '390',
+                width: '640',
+                videoId: 'gglkHLTS9Ao', // ID do vídeo do YouTube
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Inicia o vídeo quando o overlay for clicado
+            document.getElementById('overlay').addEventListener('click', function () {
+                event.target.playVideo();
+            });
+        }
     </script>
 </body>
 </html>
